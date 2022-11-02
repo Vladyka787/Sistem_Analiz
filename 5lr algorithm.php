@@ -50,35 +50,19 @@ function matrix_kvadr_umnog(array $A_k, array $A)
     return $result;
 }
 
-function matrix_kvadr_slogenie(array $A, array $B)
-{ // Считает только подобные квадраты к примеру: 4х4 и 4х4
-
-    $result = [];
-    $kolv_verh = count($A);
-
-    for ($i = 0; $i < $kolv_verh; $i++) {
-        for ($j = 0; $j < $kolv_verh; $j++) {
-            $result[$i][$j] = $A[$i][$j] + $B[$i][$j];
-        }
-    }
-
-    return $result;
-}
-
 function rasschet_summ_matrix_smeg(array $matrix_smeg)
 {
     $matrix_itog = $matrix_smeg;
-    $itog = $matrix_smeg;
+
     $stepen = count($matrix_smeg);
 
     $ost = $stepen;
     while ($ost != 1) {
         $matrix_itog = matrix_kvadr_umnog($matrix_itog, $matrix_smeg);
-        $itog = matrix_kvadr_slogenie($matrix_itog, $itog);
         $ost--;
     }
 
-    return $itog;
+    return $matrix_itog;
 }
 
 function rasschet_matrix_sviaz(array $summ_matrix_smeg)
@@ -102,18 +86,33 @@ function rasschet_matrix_sviaz(array $summ_matrix_smeg)
     return $matrix_sviaz;
 }
 
-$out[] = json_decode(file_get_contents('php://input'));
 
-$arr = $out[0]->arr;
+//$matrix_left_incident = [
+//    [],
+//    [1],
+//    [1, 2],
+//    [2, 3],
+//];
 
+$matrix_left_incident = [
+    [2, 5],
+    [1, 3],
+    [],
+    [3, 7],
+    [1, 3, 6],
+    [1],
+    [5, 8, 9],
+    [6, 10],
+    [4],
+    [6, 8],
+];
 
-$matrix_left_incident = [];
-
-foreach ($arr as $item) {
-    foreach ($item as $value) {
-        $matrix_left_incident[] = $value;
-    }
-}
+//$matrix_left_incident = [
+//    [2, 3],
+//    [1, 3, 4],
+//    [1, 2, 4],
+//    [2, 3],
+//];
 
 $matrix_smeg = matrix_left_incident_to_smeg($matrix_left_incident);
 
@@ -121,8 +120,4 @@ $summ_matrix_smeg = rasschet_summ_matrix_smeg($matrix_smeg);
 
 $matrix_sviaz = rasschet_matrix_sviaz($summ_matrix_smeg);
 
-echo json_encode([
-    "matrix_smeg" => $matrix_smeg,
-    "summ_matrix_smeg" => $summ_matrix_smeg,
-    "matrix_sviaz" => $matrix_sviaz,
-]);
+echo 1;

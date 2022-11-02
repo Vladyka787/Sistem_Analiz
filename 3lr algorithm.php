@@ -11,7 +11,8 @@ function topologich_decompose(array $graph, array $E)
 
     while ($graph !== []) {
         foreach ($graph as $keyGraph => $strGraph) {
-            if (array_key_exists($keyGraph, $graph)) {
+//        for ($i = 0; $i < $kolv_verh; $i++) {
+            if (array_key_exists($keyGraph, $graph)/*$graph[$i] != []*/) {
                 $R = [];
                 for ($j = 0; $j < $kolv_verh; $j++) {
                     if (bfs($graph, $keyGraph, $j)) {
@@ -33,9 +34,25 @@ function topologich_decompose(array $graph, array $E)
 
                 foreach ($V_vrem as $item) {
                     unset($graph[$item]);
+//                    foreach ($graph as $value) {
+//                        foreach ($value as $key => $elem) {
+//                            if ($elem == $item) {
+//                                unset($value[$key]);
+//                            }
+//                        }
+//                    }
                 }
 
                 for ($k = 0, $kMax = count($V_vrem); $k < $kMax; $k++) {
+//                    for ($m = 0, $mMax = count($graph); $m < $mMax; $m++) {
+//                        if ($graph[$m] != []) {
+//                            foreach ($graph[$m] as $l => $lValue) {
+//                                if ($lValue == $V_vrem[$k]) {
+//                                    unset($graph[$m][$l]);
+//                                }
+//                            }
+//                        }
+//                    }
 
                     foreach ($graph as $keyItem => $item) {
                         if ($graph[$keyItem] != []) {
@@ -112,12 +129,31 @@ function topologich_decompose(array $graph, array $E)
     ];
 }
 
-$out[] = json_decode(file_get_contents('php://input'));
+//$arr = [
+//    [0, 1, 0, 0, 1, 1, 0, 0, 0, 0],
+//    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//    [0, 1, 0, 1, 1, 0, 0, 0, 0, 0],
+//    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+//    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+//    [0, 0, 0, 0, 1, 0, 0, 1, 0, 1],
+//    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+//    [0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+//    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+//    [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+//];
 
-//echo json_encode($out);
-
-$arr = $out[0]->arr;
-
+$arr = [
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+];
 
 $kolv_verh = count($arr);
 
@@ -148,7 +184,4 @@ for ($i = 0; $i < $kolv_verh; $i++) {
 
 $matrix_result = topologich_decompose($graph, $E);
 
-echo json_encode([
-    'matrix_result' => $matrix_result,
-    'E' => $E,
-]);
+echo 1;
